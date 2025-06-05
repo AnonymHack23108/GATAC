@@ -8,9 +8,21 @@
 </head>
 <body>
   <h1>GATAC Streaming</h1>
-  <div id="categories"></div>
-  <div id="videos"></div>
-  <video id="player" controls width="640"></video>
-<script src="app.js"></script>
+
+  <div id="profile-selection" class="profile-selection">
+    <h2>Choisissez votre profil</h2>
+    <div id="profiles"></div>
+  </div>
+
+  <div id="main" class="hidden">
+    <div id="search">
+      <input type="text" id="searchInput" placeholder="Rechercher un film ou une série">
+    </div>
+    <div id="categories"></div>
+    <div id="videos"></div>
+    <video id="player" controls width="640"></video>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>

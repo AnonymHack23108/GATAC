@@ -4,8 +4,20 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MEDIA_DIR = process.env.MEDIA_DIR || path.join(__dirname, 'media');
+const PROFILES_PATH = path.join(__dirname, 'profiles.json');
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/avatars', express.static(__dirname));
+
+app.get('/api/profiles', (req, res) => {
+  if (!fs.existsSync(PROFILES_PATH)) return res.json([]);
+  const data = fs.readFileSync(PROFILES_PATH, 'utf8');
+  try {
+    res.json(JSON.parse(data));
+  } catch (e) {
+    res.json([]);
+  }
+});
 
 // helper to get categories (subdirectories)
 function getCategories() {
