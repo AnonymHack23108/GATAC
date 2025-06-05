@@ -4,7 +4,19 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MEDIA_DIR = process.env.MEDIA_DIR || path.join(__dirname, 'media');
-const PROFILES_PATH = path.join(__dirname, 'profiles.json');
+// resolve the profiles.json path even if server.js is executed from a
+// build directory. This tries the current directory and its parent so
+// profiles.json can live next to the project root.
+function resolveProfilesPath() {
+  const locations = [__dirname, path.resolve(__dirname, '..')];
+  for (const dir of locations) {
+    const file = path.join(dir, 'profiles.json');
+    if (fs.existsSync(file)) return file;
+  }
+  return path.join(__dirname, 'profiles.json');
+}
+
+const PROFILES_PATH = resolveProfilesPath();
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/avatars', express.static(__dirname));
